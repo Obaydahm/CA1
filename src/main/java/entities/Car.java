@@ -28,7 +28,9 @@ public class Car implements Serializable {
     private String make;
     private int price;
     private String model;
-
+    private String created;
+    private String owner;
+    
     public Car() {
     }
 
@@ -62,5 +64,14 @@ public class Car implements Serializable {
     public String getModel() {
         return model;
     }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+    
 
 }
