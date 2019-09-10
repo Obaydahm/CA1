@@ -106,6 +106,6 @@ public class RenameMeResourceTest {
         .get("/xxx/count").then()
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("count", equalTo(2));   
+        .body("count", equalTo(3));   
     }
 }

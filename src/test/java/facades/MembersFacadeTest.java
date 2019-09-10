@@ -24,7 +24,7 @@ public class MembersFacadeTest {
     private static EntityManagerFactory emf;
     private static MembersFacade facade;
     
-    
+    Members memberUsedForTestGetById = new Members("Bob", "bob@cphbusiness.dk", Colour.GREEN);
     
 
     public MembersFacadeTest() {
@@ -69,6 +69,7 @@ public class MembersFacadeTest {
             em.persist(new Members("Tom", "Tom@cphbusiness.dk", Colour.GREEN));
             em.persist(new Members("Lone", "Lone@cphbusiness.dk", Colour.YELLOW));
             em.persist(new Members("Sigurd", "Sigurd@cphbusiness.dk", Colour.RED));
+            em.persist(memberUsedForTestGetById);
 
             em.getTransaction().commit();
         } finally {
@@ -84,7 +85,7 @@ public class MembersFacadeTest {
     // TODO: Delete or change this method 
     @Test
     public void testGetMembersCount() {
-        assertEquals(3, facade.getMembersCount(), "Expects two rows in the database");
+        assertEquals(4, facade.getMembersCount(), "Expects two rows in the database");
     }
     
     @Test
@@ -94,14 +95,11 @@ public class MembersFacadeTest {
         MembersDTO member;
         
         //Act
-        member = facade.getMemberById( 3L );
+        member = facade.getMemberById( 2L );
         
         //Arrange
-        assertEquals("Lone", member.getName());
-        assertEquals(Colour.YELLOW, member.getColourLevelOfStudent());
-        
-        
-      
+        assertEquals("Bob", memberUsedForTestGetById.getName());
+        assertEquals(Colour.GREEN, memberUsedForTestGetById.getColourLevelOfStudent());
         
     }
 
