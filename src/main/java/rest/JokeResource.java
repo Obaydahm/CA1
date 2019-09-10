@@ -17,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("xxx")
-public class RenameMeResource {
+public class JokeResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
                 "pu",
-                "jdbc:mysql://localhost:3307/startcode",
+                "jdbc:mysql://localhost:3307/ca1",
                 "dev",
                 "ax2",
                 EMF_Creator.Strategy.CREATE);
