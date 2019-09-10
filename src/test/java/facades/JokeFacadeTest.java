@@ -6,6 +6,7 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -128,7 +129,17 @@ public class JokeFacadeTest {
 
     @Test
     public void testGetRandomJoke() throws Exception {
-        System.out.println("3. Get random joke test");
+        JokeDTO jDTO = facade.getRandomJoke();
+        System.out.println(jDTO.getId() + " - " + jDTO.getType() + " - " + jDTO.getJoke());
+        Assertions.assertNotNull(jDTO);
+        
+        jDTO = facade.getRandomJoke();
+        System.out.println(jDTO.getId() + " - " + jDTO.getType() + " - " + jDTO.getJoke());
+        Assertions.assertNotNull(jDTO);
+        
+        jDTO = facade.getRandomJoke();
+        System.out.println(jDTO.getId() + " - " + jDTO.getType() + " - " + jDTO.getJoke());
+        Assertions.assertNotNull(jDTO);
     }
 
 }
