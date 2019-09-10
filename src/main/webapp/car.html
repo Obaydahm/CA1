@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    </head>
+    <body>
+        <h1>Filter</h1>
+        <input type="text" id="filter" placeholder="Filter by make or price"><input id="filterb" type="submit" class="button">
+        <input type="text" id="filteryear" placeholder="Filter by year"><input id="filterbyear" type="submit" class="button">
+        <h1>Sort</h1>
+        <form>
+            <select class="browser-default custom-select w-25" id="sort">
+                <option value="year">Year</option>
+                <option value="make">Make</option>
+                <option value="model">Model</option>
+                <option value="price">Price</option>
+            </select>
+            <input type="submit" class="button" id="sortb">
+        </form>
+        <table id="table" class="table"></table>
+        <script type="text/javascript" src="scriptcar.js"></script>
+    </body>
+</html>
