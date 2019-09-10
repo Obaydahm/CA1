@@ -31,20 +31,20 @@ public class CarResource {
     private static final CarFacade FACADE = CarFacade.getCarFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    {
-        EntityManager em = EMF.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.createNamedQuery("Car.deleteAllRows").executeUpdate();
-            em.persist(new Car(2019, "Mercedes Benz", 600000, "CLS"));
-            em.persist(new Car(1999, "BMW", 1000000, "M8"));
-            em.persist(new Car(2017, "Random1", 900000, "random1"));
-            em.persist(new Car(2019, "Random2", 1500000, "random2"));
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
+//    {
+//        EntityManager em = EMF.createEntityManager();
+//        try {
+//            em.getTransaction().begin();
+//            em.createNamedQuery("Car.deleteAllRows").executeUpdate();
+//            em.persist(new Car(2019, "Mercedes Benz", 600000, "CLS"));
+//            em.persist(new Car(1999, "BMW", 1000000, "M8"));
+//            em.persist(new Car(2017, "Random1", 900000, "random1"));
+//            em.persist(new Car(2019, "Random2", 1500000, "random2"));
+//            em.getTransaction().commit();
+//        } finally {
+//            em.close();
+//        }
+//    }
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
