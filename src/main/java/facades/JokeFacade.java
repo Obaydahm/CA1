@@ -5,7 +5,9 @@
  */
 package facades;
 
+import DTO.JokeDTO;
 import entities.Joke;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
@@ -42,28 +44,33 @@ public class JokeFacade {
         return emf.createEntityManager();
     }
     
-    public List<Joke> getAllJokes(){
+    public List<JokeDTO> getAllJokes(){
         EntityManager em = emf.createEntityManager();
+        List<JokeDTO> dtoList = new ArrayList<>();
         try{
             TypedQuery<Joke> tq = em.createNamedQuery("SELECT j FROM Joke j", Joke.class);
-            return tq.getResultList();
+            List<Joke> jokes = tq.getResultList();
+            for(Joke j : jokes){
+                dtoList.add(new JokeDTO(j));
+            }
+            return dtoList;
         }finally{
             em.close();
         }
     }
     
-    public Joke getJokeById(Long id){
+    public JokeDTO getJokeById(Long id){
         EntityManager em = emf.createEntityManager();
         try{
-            return em.find(Joke.class, id);
+            return new JokeDTO(em.find(Joke.class, id));
         }finally{
             em.close();
         }
     }
     
-    public Joke getRandomJoke(){
-        List<Joke> jokes = getAllJokes();
+    public JokeDTO getRandomJoke(){
+        List<JokeDTO> dtoList = getAllJokes();
         Random r = new Random();
-        return jokes.get(r.nextInt(jokes.size()));
+        return dtoList.get(r.nextInt(dtoList.size()));
     }
 }
