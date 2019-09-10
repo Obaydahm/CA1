@@ -1,6 +1,7 @@
 package rest;
 
-import entities.RenameMe;
+import entities.Colour;
+import entities.Members;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
@@ -70,9 +71,10 @@ public class RenameMeResourceTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt","More text"));
-            em.persist(new RenameMe("aaa","bbb"));
+            em.createNamedQuery("Members.deleteAllRows").executeUpdate();
+            em.persist(new Members("Tom", "Tom@cphbusiness.dk", Colour.GREEN));
+            em.persist(new Members("Lone", "Lone@cphbusiness.dk", Colour.YELLOW));
+            em.persist(new Members("Sigurd", "Sigurd@cphbusiness.dk", Colour.RED));
            
             em.getTransaction().commit();
         } finally {
