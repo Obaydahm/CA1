@@ -2,7 +2,6 @@ package facades;
 
 import entities.Car;
 import utils.EMF_Creator;
-import entities.RenameMe;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

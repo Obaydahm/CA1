@@ -102,6 +102,7 @@ public class CarResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("msg", equalTo("Hello World"));
+
     }
 
     @Test
@@ -125,6 +126,6 @@ public class CarResourceTest {
                 .body("[0].model", equalTo("random2"))
                 .and()
                 .body("size()", is(3));
-                
+
     }
 }
