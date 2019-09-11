@@ -34,7 +34,11 @@ public class JokeResourceTest {
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
-
+    
+    Joke j = new Joke("Hvad sagde koen til kyllingen?: muuuuuuuuuuuuuuuuuh", "Ko og Kylling", "Cartoonnetwork");
+    Joke j2 = new Joke("Hvad sagde Pickachu til Ash: Picka Picka", "Pokemon", "Cartoonnetwork");
+    Joke j3 = new Joke("Joke3", "Kategori3", "google");
+            
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
@@ -71,15 +75,15 @@ public class JokeResourceTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Joke.deleteAllRows").executeUpdate();
-            em.persist(new Joke("Hvad sagde koen til kyllingen?: muuuuuuuuuuuuuuuuuh", "Ko og Kylling", "Cartoonnetwork"));
+            em.persist(j);
             em.getTransaction().commit();
             
             em.getTransaction().begin();
-            em.persist(new Joke("Hvad sagde Pickachu til Ash: Picka Picka", "Pokemon", "Cartoonnetwork"));
+            em.persist(j2);
             em.getTransaction().commit();
             
             em.getTransaction().begin();
-            em.persist(new Joke("Joke3", "Kategori3", "google"));
+            em.persist(j3);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -121,5 +125,47 @@ public class JokeResourceTest {
         .and()
         .body("size()", equalTo(3));
         
+    }
+    
+    @Test
+    public void testGetById() throws Exception {
+        //Joke 1
+        given()
+        .contentType("application/json")
+        .get("/joke/" + j.getId()).then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .log().body()
+        .body("id", equalTo(j.getId().intValue()))
+        .and()
+        .body("joke", equalTo(j.getJoke()))
+        .and()  
+        .body("type", equalTo(j.getType()));
+        
+        //Joke 2
+        given()
+        .contentType("application/json")
+        .get("/joke/" + j2.getId()).then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .log().body()
+        .body("id", equalTo(j2.getId().intValue()))
+        .and()
+        .body("joke", equalTo(j2.getJoke()))
+        .and()  
+        .body("type", equalTo(j2.getType()));
+        
+        //Joke 3
+        given()
+        .contentType("application/json")
+        .get("/joke/" + j3.getId()).then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .log().body()
+        .body("id", equalTo(j3.getId().intValue()))
+        .and()
+        .body("joke", equalTo(j3.getJoke()))
+        .and()  
+        .body("type", equalTo(j3.getType()));
     }
 }
