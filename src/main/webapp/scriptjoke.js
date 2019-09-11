@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 let table = document.getElementById("table");
-let url = "https://localhost:8080/CA1/api/joke/all";
+let url = "https://omoussa.com/CA1/api/joke/all";
 function showTable(jokes) {
     let tablehead = '<col width="5%"><col width="25%"><col width="70%"><thead><tr><th>#</th><th>Type</th><th>Joke</th></tr></thead><tbody>';
     let tabledata = jokes.map(obj => "<tr><td>" + obj.id + "</td><td>" + obj.type + "</td><td>" + obj.joke + "</td>");
@@ -20,7 +20,7 @@ fetch(url)
 });
 
 function getById(id){
-	fetch("https://localhost:8080/CA1/api/joke/" + id)
+	fetch("https://omoussa.com/CA1/api/joke/" + id)
 	.then(res => res.json()) //in flow1, just do it
 	.then(data => {
 		document.getElementById("jokeinfo").innerHTML = "<b>ID:</b> " + data.id + "<br> <b>Type:</b> " + data.type + "<br>" + data.joke;
@@ -30,7 +30,7 @@ function getById(id){
 
 
 function getRandomJoke(){
-	fetch("https://localhost:8080/CA1/api/joke/random")
+	fetch("https://omoussa.com/CA1/api/joke/random")
 	.then(res => res.json()) //in flow1, just do it
 	.then(data => {
 		document.getElementById("randomjoke").innerHTML = "<b>ID:</b> " + data.id + "<br> <b>Type:</b> " + data.type + "<br>" + data.joke;
