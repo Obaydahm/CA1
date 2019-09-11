@@ -6,11 +6,13 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -28,17 +30,20 @@ public class Car implements Serializable {
     private String make;
     private int price;
     private String model;
-    private String created;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date created;
     private String owner;
     
     public Car() {
     }
 
-    public Car(int year, String make, int price, String model) {
+    public Car(int year, String make, int price, String model, String owner) {
         this.year = year;
         this.make = make;
         this.price = price;
         this.model = model;
+        this.created = new Date();
+        this.owner = owner;
     }
 
     public static long getSerialVersionUID() {
@@ -65,7 +70,7 @@ public class Car implements Serializable {
         return model;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 

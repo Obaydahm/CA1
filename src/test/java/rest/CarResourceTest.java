@@ -74,13 +74,13 @@ public class CarResourceTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Car.deleteAllRows").executeUpdate();
-            em.persist(new Car(2019, "Random2", 1000000, "random2"));
+            em.persist(new Car(2019, "Random2", 1000000, "random2", "Random Randomsen"));
             em.getTransaction().commit();
             em.getTransaction().begin();
-            em.persist(new Car(2019, "Random1", 1000000, "random1"));
+            em.persist(new Car(2019, "Random1", 1000000, "random1", "Mads Madsen"));
             em.getTransaction().commit();
             em.getTransaction().begin();
-            em.persist(new Car(2019, "Mercedes Benz", 600000, "CLS"));
+            em.persist(new Car(2019, "Mercedes Benz", 600000, "CLS", "Peter Petersen"));
             em.getTransaction().commit();
         } finally {
             em.close();
