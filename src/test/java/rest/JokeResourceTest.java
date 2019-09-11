@@ -1,6 +1,6 @@
 package rest;
 
-import entities.RenameMe;
+import entities.Joke;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
@@ -70,40 +70,56 @@ public class JokeResourceTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt","More text"));
-            em.persist(new RenameMe("aaa","bbb"));
-           
+            em.createNamedQuery("Joke.deleteAllRows").executeUpdate();
+            em.persist(new Joke("Hvad sagde koen til kyllingen?: muuuuuuuuuuuuuuuuuh", "Ko og Kylling", "Cartoonnetwork"));
+            em.getTransaction().commit();
+            
+            em.getTransaction().begin();
+            em.persist(new Joke("Hvad sagde Pickachu til Ash: Picka Picka", "Pokemon", "Cartoonnetwork"));
+            em.getTransaction().commit();
+            
+            em.getTransaction().begin();
+            em.persist(new Joke("Joke3", "Kategori3", "google"));
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
     
+    
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/joke").then().statusCode(200);
     }
    
     //This test assumes the database contains two rows
+    
     @Test
     public void testDummyMsg() throws Exception {
         given()
         .contentType("application/json")
-        .get("/xxx/").then()
+        .get("/joke/").then()
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode())
         .body("msg", equalTo("Hello World"));   
     }
     
     @Test
-    public void testCount() throws Exception {
+    public void testGetAll() throws Exception {
         given()
         .contentType("application/json")
-        .get("/xxx/count").then()
+        .get("/joke/all").then()
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("count", equalTo(2));   
+        .log().body()
+        .body("[0].joke", equalTo("Hvad sagde koen til kyllingen?: muuuuuuuuuuuuuuuuuh"))
+        .and()
+        .body("[1].type", equalTo("Pokemon"))
+        .and()  
+        .body("[2].type", equalTo("Kategori3"))
+        .and()
+        .body("size()", equalTo(3));
+        
     }
 }

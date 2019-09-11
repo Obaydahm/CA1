@@ -2,9 +2,8 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import entities.RenameMe;
 import utils.EMF_Creator;
-import facades.FacadeExample;
+import facades.JokeFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("xxx")
+@Path("joke")
 public class JokeResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
@@ -25,7 +24,7 @@ public class JokeResource {
                 "dev",
                 "ax2",
                 EMF_Creator.Strategy.CREATE);
-    private static final FacadeExample FACADE =  FacadeExample.getFacadeExample(EMF);
+    private static final JokeFacade FACADE =  JokeFacade.getJokeFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET
@@ -33,13 +32,18 @@ public class JokeResource {
     public String demo() {
         return "{\"msg\":\"Hello World\"}";
     }
-    @Path("count")
+    @Path("/all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getRenameMeCount() {
-        long count = FACADE.getRenameMeCount();
-        //System.out.println("--------------->"+count);
-        return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
+    public String getAll() {
+        return GSON.toJson(FACADE.getAllJokes());
+    }
+    
+    @Path("/{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getById(@PathParam("id") Long id) {
+        return GSON.toJson(FACADE.getJokeById(id));
     }
 
  
