@@ -5,6 +5,7 @@ import entities.Colour;
 import utils.EMF_Creator;
 import entities.Members;
 import java.awt.Color;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -23,6 +24,8 @@ public class MembersFacadeTest {
 
     private static EntityManagerFactory emf;
     private static MembersFacade facade;
+    
+    Members memberUsedByIdTest = new Members("Bob", "bob@cphbusiness.dk", Colour.GREEN);
 
     public MembersFacadeTest() {
     }
@@ -61,19 +64,14 @@ public class MembersFacadeTest {
     public void setUp() {
         EntityManager em = emf.createEntityManager();
         try {
-            
-            //Commiting multiple times in order to control how the test data is mapped to the database
             em.getTransaction().begin();
             em.createNamedQuery("Members.deleteAllRows").executeUpdate();
             em.persist(new Members("Tom", "Tom@cphbusiness.dk", Colour.GREEN));
-            em.getTransaction().commit();
-            
-            em.getTransaction().begin();
             em.persist(new Members("Lone", "Lone@cphbusiness.dk", Colour.YELLOW));
-            em.getTransaction().commit();
-            
-            em.getTransaction().begin();
             em.persist(new Members("Sigurd", "Sigurd@cphbusiness.dk", Colour.RED));
+            em.persist(memberUsedByIdTest);
+            
+            
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -88,7 +86,7 @@ public class MembersFacadeTest {
     // TODO: Delete or change this method 
     @Test
     public void testGetMembersCount() {
-        assertEquals(3, facade.getMembersCount(), "Expects two rows in the database");
+        assertEquals(4, facade.getMembersCount(), "Expects two rows in the database");
     }
     
     @Test
@@ -98,11 +96,11 @@ public class MembersFacadeTest {
         MembersDTO member;
         
         //Act
-        member = facade.getMemberById( 2L );
+        member = facade.getMemberById( memberUsedByIdTest.getId());
         
         //Arrange
-        assertEquals("Lone", member.getName());
-        assertEquals(Colour.YELLOW, member.getColourLevelOfStudent());
+        assertEquals("Bob", member.getName());
+        assertEquals(Colour.GREEN, member.getColourLevelOfStudent());
     }
     
    
