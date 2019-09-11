@@ -65,7 +65,32 @@ public class MembersFacade {
         }
     }
     
-  
+    public List<MembersDTO> getAllMembers()
+    {
+        //open a database connection (and creates a database, if one doesnt exists)
+        EntityManager em = emf.createEntityManager();
+        
+        try
+        {
+            TypedQuery<Members> query = 
+                       em.createQuery("Select m from Members m",Members.class);
+            
+            List<Members> allMembers =  query.getResultList();
+            
+            List<MembersDTO> allMembersDTO = new LinkedList<>();
+            
+            for(Members member : allMembers)
+            {
+                allMembersDTO.add(new MembersDTO(member));
+            }
+            
+            return allMembersDTO;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
     
 
 }

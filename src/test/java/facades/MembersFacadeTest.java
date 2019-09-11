@@ -103,6 +103,19 @@ public class MembersFacadeTest {
         assertEquals(Colour.GREEN, member.getColourLevelOfStudent());
     }
     
+    @Test
+    public void testGetAllMembers()
+    {
+        //Arrange
+        List<MembersDTO> allMembers;
+        
+        //Act
+        allMembers = facade.getAllMembers();
+        
+        //Assert
+        assertEquals(4, allMembers.size());
+    }
+    
    
 
 }
