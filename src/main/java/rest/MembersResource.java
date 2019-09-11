@@ -1,10 +1,12 @@
 package rest;
 
+import DTO.MembersDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.Members;
 import utils.EMF_Creator;
 import facades.MembersFacade;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,12 +18,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("xxx")
-public class RenameMeResource {
+@Path("groupmembers")
+public class MembersResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
                 "pu",
-                "jdbc:mysql://localhost:3307/startcode",
+                "jdbc:mysql://localhost:3307/ca1",
                 "dev",
                 "ax2",
                 EMF_Creator.Strategy.CREATE);
@@ -36,11 +38,22 @@ public class RenameMeResource {
     @Path("count")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getRenameMeCount() {
+    public String getRMembersCount() {
         long count = FACADE.getMembersCount();
         //System.out.println("--------------->"+count);
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
     }
+    
+    @Path("all")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getListOffMembers()
+    {
+        List<MembersDTO> allMembers = FACADE.getAllMembers();
+        return GSON.toJson(allMembers);
+    }
+        
+    
 
  
 }

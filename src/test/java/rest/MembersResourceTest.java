@@ -14,7 +14,10 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +28,7 @@ import utils.EMF_Creator.Strategy;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
-public class RenameMeResourceTest {
+public class MembersResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
@@ -35,6 +38,7 @@ public class RenameMeResourceTest {
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
+    
 
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
@@ -75,6 +79,7 @@ public class RenameMeResourceTest {
             em.persist(new Members("Tom", "Tom@cphbusiness.dk", Colour.GREEN));
             em.persist(new Members("Lone", "Lone@cphbusiness.dk", Colour.YELLOW));
             em.persist(new Members("Sigurd", "Sigurd@cphbusiness.dk", Colour.RED));
+            
            
             em.getTransaction().commit();
         } finally {
@@ -85,7 +90,7 @@ public class RenameMeResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/groupmembers").then().statusCode(200);
     }
    
     //This test assumes the database contains two rows
@@ -93,7 +98,7 @@ public class RenameMeResourceTest {
     public void testDummyMsg() throws Exception {
         given()
         .contentType("application/json")
-        .get("/xxx/").then()
+        .get("/groupmembers/").then()
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode())
         .body("msg", equalTo("Hello World"));   
@@ -103,9 +108,25 @@ public class RenameMeResourceTest {
     public void testCount() throws Exception {
         given()
         .contentType("application/json")
-        .get("/xxx/count").then()
+        .get("/groupmembers/count").then()
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode())
         .body("count", equalTo(3));   
     }
+    
+    @Test
+    public void testGetListOfMembers()
+    {
+        given()
+        .contentType("application/json")
+        .get("/groupmembers/all").then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .body("size()", is(3))
+        .and().body("name", hasItem("Tom"))
+        .and().body("name", hasItem("Lone"))
+        .and().body("name", hasItem("Sigurd"));
+    }
+    
+    
 }
