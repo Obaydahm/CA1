@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 let table = document.getElementById("table");
-let url = "http://localhost:8080/jpareststarter/api/car/all";
+let url = "http://omoussa.com/CA1/api/car/all";
 function showtable(cars) {
 
     let tablehead = "<tr><th>Id</th><th>Year</th><th>Make</th><th>Model</th><th>Price</th></tr>";
