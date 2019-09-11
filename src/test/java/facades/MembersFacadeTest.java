@@ -6,6 +6,8 @@ import utils.EMF_Creator;
 import entities.Members;
 import java.awt.Color;
 import java.util.List;
+import javassist.CtClass;
+import javassist.bytecode.annotation.Annotation;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -114,6 +116,20 @@ public class MembersFacadeTest {
         
         //Assert
         assertEquals(4, allMembers.size());
+    }
+    
+    @Test
+    public void testCreateMember()
+    {
+        //Arrange
+        Long count;
+        
+        //Act
+        count = facade.getMembersCount();
+        facade.createMember("Sine", "sine@cphbusiness.dk", Colour.RED);
+        
+        //Assert (if the member above got persisted, the members count should be equal to the count before it got persisted +1 )
+        assertEquals(count+1, facade.getMembersCount());
     }
     
    

@@ -1,6 +1,7 @@
 package facades;
 
 import DTO.MembersDTO;
+import entities.Colour;
 import entities.Members;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,6 +86,27 @@ public class MembersFacade {
             }
             
             return allMembersDTO;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+    
+    public Members createMember(String name, String email, Colour colourLevelOfStudent)
+    {
+        //open a database connection (and creates a database, if one doesnt exists)
+        EntityManager em = emf.createEntityManager();
+        
+        try
+        {
+            Members member = new Members(name, email, Colour.GREEN);
+            
+            em.getTransaction().begin();
+            em.persist(member);
+            em.getTransaction().commit();
+            
+            return member;
         }
         finally
         {
