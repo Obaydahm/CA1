@@ -3,6 +3,7 @@ package rest;
 import DTO.MembersDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entities.Colour;
 import entities.Members;
 import utils.EMF_Creator;
 import facades.MembersFacade;
@@ -29,6 +30,18 @@ public class MembersResource {
                 EMF_Creator.Strategy.CREATE);
     private static final MembersFacade FACADE =  MembersFacade.getMembersFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    
+    {
+        //populates the database, if its empty
+        if(FACADE.getMembersCount() == 0)
+        {
+            FACADE.createMember("Lars", "lars@cphbusiness.dk", Colour.RED);
+            FACADE.createMember("Tobias", "tobias@cphbusiness.dk", Colour.GREEN);
+            FACADE.createMember("Erika", "erika@cphbusiness.dk", Colour.YELLOW);
+            FACADE.createMember("Louise", "louise@cphbusiness.dk", Colour.YELLOW);
+            FACADE.createMember("Mads", "mads@cphbusiness.dk", Colour.GREEN);
+        }
+    }
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
