@@ -5,13 +5,11 @@
  */
 let table = document.getElementById("table");
 let url = "https://omoussa.com/CA1/api/car/all";
-function showtable(cars) {
 
-    let tablehead = "<tr><th>Id</th><th>Year</th><th>Make</th><th>Model</th><th>Price</th></tr>";
-    let tabledata = cars.map(obj => "<tr><td>" + obj.id + "</td><td>" + obj.year + "</td><td>" +
-                obj.make + "</td><td>" + obj.model + "</td><td>" + obj.price + "</td></tr>");
-    let tab = tablehead.concat(tabledata.join(''));
-    table.innerHTML = tab;
+function showtable(cars) {
+    let tablehead = "<tr>" + Object.keys(cars[0]).map(x => "<td>" + x.toUpperCase() + "</td>").join('') + "</tr>";
+    let tabledata = cars.map(obj => "<tr>"+Object.keys(obj).map(x => "<td>" + obj[x] + "</td>").join('')+"</tr>").join('');
+    table.innerHTML = tablehead.concat(tabledata);
 }
 
 fetch(url)
@@ -20,11 +18,14 @@ fetch(url)
             // Inside this callback, and only here, the response data is available
             window.onload = showtable(data);
             document.getElementById("filterb").onclick = function (e) {
-                e.preventDefault();
                 let cars_filtered;
                 let filter = document.getElementById("filter");
-                if (!isNaN(filter.value)) {
-                    cars_filtered = data.filter(obj => obj.price < filter.value);
+                if(filter.value === '') {
+                    table.innerHTML = "<h2>Please enter a value!</h2>";
+                    return;
+                }
+                else if (!isNaN(filter.value)) {
+                    cars_filtered = data.filter(obj => obj.price <= filter.value);
                     if (cars_filtered.length === 0) {
                         table.innerHTML = "<h2>No cars cheaper than " + filter.value + "kr :-(</h2>";
                         return;
@@ -39,11 +40,13 @@ fetch(url)
                 showtable(cars_filtered);
             };
             document.getElementById("filterbyear").onclick = function (e) {
-                e.preventDefault();
                 let cars_filtered;
                 let filter = document.getElementById("filteryear");
-                cars_filtered = data.filter(obj => obj.year < filter.value);
-                if (cars_filtered.length === 0) {
+                cars_filtered = data.filter(obj => obj.year <= filter.value);
+                if(filter.value === '') {
+                    table.innerHTML = "<h2>Please enter a value!</h2>";
+                }
+                else if (cars_filtered.length === 0) {
                     table.innerHTML = "<h2>No cars older than " + filter.value + " :-(</h2>";
                     return;
                 }
@@ -57,11 +60,11 @@ fetch(url)
                     cars_sorted = data.sort(function (a, b) {
                         return a.make.toLowerCase().localeCompare(b.make.toLowerCase());
                     });
-                } else if(sort.value === "model") {
+                } else if (sort.value === "model") {
                     cars_sorted = data.sort(function (a, b) {
                         return a.model.toLowerCase().localeCompare(b.model.toLowerCase());
                     });
-                } else if(sort.value === "year") {
+                } else if (sort.value === "year") {
                     cars_sorted = data.sort(function (a, b) {
                         return a.year < b.year;
                     });
@@ -70,7 +73,7 @@ fetch(url)
                         return a.price < b.price;
                     });
                 }
-                
+
                 showtable(cars_sorted);
             };
             // data.map(property => "<td>"+property+"</td>");
