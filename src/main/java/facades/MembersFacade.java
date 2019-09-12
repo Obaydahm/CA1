@@ -93,15 +93,13 @@ public class MembersFacade {
         }
     }
     
-    public Members createMember(String name, String email, Colour colourLevelOfStudent)
+    public Members createMember(Members member)
     {
         //open a database connection (and creates a database, if one doesnt exists)
         EntityManager em = emf.createEntityManager();
         
         try
         {
-            Members member = new Members(name, email, Colour.GREEN);
-            
             em.getTransaction().begin();
             em.persist(member);
             em.getTransaction().commit();

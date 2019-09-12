@@ -35,11 +35,11 @@ public class MembersResource {
         //populates the database, if its empty
         if(FACADE.getMembersCount() == 0)
         {
-            FACADE.createMember("Lars", "lars@cphbusiness.dk", Colour.RED);
-            FACADE.createMember("Tobias", "tobias@cphbusiness.dk", Colour.GREEN);
-            FACADE.createMember("Erika", "erika@cphbusiness.dk", Colour.YELLOW);
-            FACADE.createMember("Louise", "louise@cphbusiness.dk", Colour.YELLOW);
-            FACADE.createMember("Mads", "mads@cphbusiness.dk", Colour.GREEN);
+            FACADE.createMember(new Members("Lars", "lars@cphbusiness.dk", Colour.RED));
+            FACADE.createMember(new Members("Tobias", "tobias@cphbusiness.dk", Colour.GREEN));
+            FACADE.createMember(new Members("Erika", "erika@cphbusiness.dk", Colour.YELLOW));
+            FACADE.createMember(new Members("Louise", "louise@cphbusiness.dk", Colour.YELLOW));
+            FACADE.createMember(new Members("Mads", "mads@cphbusiness.dk", Colour.GREEN));
         }
     }
     

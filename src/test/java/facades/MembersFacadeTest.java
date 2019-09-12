@@ -126,7 +126,7 @@ public class MembersFacadeTest {
         
         //Act
         count = facade.getMembersCount();
-        facade.createMember("Sine", "sine@cphbusiness.dk", Colour.RED);
+        facade.createMember(new Members("Sine", "sine@cphbusiness.dk", Colour.RED));
         
         //Assert (if the member above got persisted, the members count should be equal to the count before it got persisted +1 )
         assertEquals(count+1, facade.getMembersCount());
