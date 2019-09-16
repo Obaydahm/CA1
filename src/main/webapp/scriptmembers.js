@@ -6,7 +6,7 @@
 
  
 
-let url = "http://localhost:8080/ca1/api/groupmembers/all"
+let url = "https://omoussa.com/CA1/api/groupmembers/all"
 
 fetch(url)
     .then(res => res.json()) //in flow1, just do it
@@ -29,7 +29,7 @@ fetch(url)
       
   document.getElementById("reloadMembersButton").onclick = function()
   {
-        let url = "http://localhost:8080/ca1/api/groupmembers/all"
+        let url = "https://omoussa.com/CA1/api/groupmembers/all"
 
         fetch(url)
             .then(res => res.json()) //in flow1, just do it
@@ -96,5 +96,4 @@ function generateTableData(table, membersData)
         }
     }
 }
-
 
